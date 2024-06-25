@@ -31,7 +31,8 @@ def parse_args(args):
     parser.add_argument("--vis_save_path", default="./vis_output", type=str)
     parser.add_argument(
         "--precision",
-        default="bf16",
+        # default="bf16",
+        default="fp16",
         type=str,
         choices=["fp32", "bf16", "fp16"],
         help="precision for inference",
@@ -50,6 +51,7 @@ def parse_args(args):
     parser.add_argument(
         "--conv_type",
         default="llava_v1",
+        # default="llava_llama_2",
         type=str,
         choices=["llava_v1", "llava_llama_2"],
     )
@@ -185,6 +187,9 @@ def main(args):
     model.get_model().initialize_vision_modules(model.get_model().config)
     vision_tower = model.get_model().get_vision_tower()
     vision_tower.to(dtype=torch_dtype)
+    
+    process = psutil.Process(os.getpid())
+    print(f"Memory usage: {process.memory_info().rss / 1024 ** 2} MB")
     
     if args.precision == "bf16":
         model = model.bfloat16().cuda()
@@ -328,4 +333,8 @@ def main(args):
         print(f"SMPL mesh saved as {objpath}")
         
 if __name__ == "__main__":
+    import psutil
+    process = psutil.Process(os.getpid())
+    print(f"Memory usage: {process.memory_info().rss / 1024 ** 2} MB")
+
     main(sys.argv[1:])         

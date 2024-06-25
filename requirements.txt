@@ -20,3 +20,8 @@ transformers==4.31.0
 uvicorn==0.23.2
 scipy==1.11.2
 bitsandbytes==0.41.1
+
+
+scikit-image
+yacs
+deepspeed==0.6.5
