@@ -46,7 +46,7 @@ __pycache__
 checkpoints
 data
 submodules
-vis_output
+# vis_output  # demo结果允许上传
 main_test.py
 main_train.py
 main_val.py

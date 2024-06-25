@@ -42,3 +42,18 @@ ninja: build stopped: subcommand failed.
 跑代码issue:
 - 直接用 bf16 精度没办法在 3090 上跑, 会OOM.
 - 改成 fp16, 则报错`AttributeError: 'LlamaAttention' object has no attribute 'rope_theta'`
+
+
+--- 
+
+在AUTODL上进行实验:
+- 镜像要选择 CUDNN 11.8 (大于11.7的都能用), 因为这里的pytorch版本是cu117的, 高版本能兼容低版本.
+  - 而且 Flash Attention 要求 cudatoolkit 大于 11.6 (好像是这样) 才能装上
+
+设置 huggingface镜像站:
+1. 安装依赖: `pip install -U huggingface_hub`
+
+2. 设置环境变量: `export HF_ENDPOINT=https://hf-mirror.com`
+  - 建议将上面这一行写入 `~/.bashrc`。
+
+参考链接: https://hf-mirror.com/
